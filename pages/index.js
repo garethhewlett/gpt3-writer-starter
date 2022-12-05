@@ -39,13 +39,13 @@ const Home = () => {
       <div className="container">
         <div className="header">
           <div className="header-title">
-            <h1>Improve your Innovate UK funding application</h1>
+            <h1>Innovate UK application helper</h1>
           </div>
           <div className="header-subtitle">
             <h2>
               {" "}
-              Input a brief description of your proposal and the application
-              section{" "}
+              Input a brief description of your proposal, the word count and the
+              application question{" "}
             </h2>
           </div>
         </div>
@@ -94,8 +94,7 @@ const Home = () => {
           rel="noreferrer"
         >
           <div className="badge">
-            <Image src={buildspaceLogo} alt="buildspace logo" />
-            <p>build with buildspace</p>
+            <p>Built by Flying River using buildspace</p>
           </div>
         </a>
       </div>

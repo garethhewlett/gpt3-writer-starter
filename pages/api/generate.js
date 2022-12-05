@@ -7,7 +7,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 const basePromptPrefix =
-  "Write a successful Innovate UK grant application using the word count and description provided below. Use only British spelling and assume no prior knowledge of the topic. It should excite the reader. Include quantitive evidence about the problem in the UK mentioning the source";
+  " Write a successful Innovate UK grant application for the question asked. Brielfy include the most relevant benefit of solving the problem in UK based on the impact in quantified numbers, mentioning the source. Write the word count";
 const generateAction = async (req, res) => {
   // Run first prompt
   console.log(`API: ${basePromptPrefix}${req.body.userInput}\n`);
@@ -15,18 +15,16 @@ const generateAction = async (req, res) => {
   const baseCompletion = await openai.createCompletion({
     model: "text-davinci-003",
     prompt: `${basePromptPrefix}${req.body.userInput}`,
-    temperature: 0.55,
-    max_tokens: 400,
+    temperature: 0.5,
+    max_tokens: 500,
   });
 
   const basePromptOutput = baseCompletion.data.choices.pop();
 
   // I build Prompt #2.
   const secondPrompt = `
-   Avoid repetition. Quantified the UK and international commercial opportunity including sources. Explain how it helps specific UN SDG's and either the UK GDP or UK productivity.
+  Make the input flow with very concise with specific descriptions of the proposal, the problem, right team to deliver it, the commercial opportunity, specific UN SDG benefit and why public funding is necessary. Use only British English spelling. The number of words must be between 97% and 100% of the word count provided.
    Title: ${req.body.userInput}
- 
-   Table of Contents: ${basePromptOutput.text}
  
    Application:
    `;
@@ -36,9 +34,9 @@ const generateAction = async (req, res) => {
     model: "text-davinci-003",
     prompt: `${secondPrompt}`,
     // I set a higher temperature for this one. Up to you!
-    temperature: 0.65,
+    temperature: 0.6,
     // I also increase max_tokens.
-    max_tokens: 1500,
+    max_tokens: 1800,
   });
 
   // Get the output
